@@ -1,7 +1,7 @@
 # tmux (byobu) のプロセスがないなら script 実行、あるなら script 起動済の場合実行しない
 mkdir -p /var/log/script
-[ "`ps -aux | grep "byobu" | grep "tmux" | wc -l`" -gt 0 ] && {
-  [ "`ps -aux | grep "script /var/log/script" | wc -l`" -gt 1 ] || {
+[ "`ps -aux | grep "byobu" | grep "tmux" | grep -v $$ | wc -l`" -gt 0 ] && {
+  [ "`ps -aux | grep "script /var/log/script" | grep -v $$ | wc -l`" -gt 0 ] || {
     script /var/log/script/$(date +%Y%m%d_%H%M%S)_$(whoami).log
   }
 } || {
